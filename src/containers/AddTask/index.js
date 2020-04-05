@@ -29,7 +29,7 @@ class AddTask extends Component {
 
     return (
       <TextField
-        placeholder={"Enter task here"}
+        placeholder={"Enter address here"}
         value={task}
         onChangeText={this._onChangeTask}
         style={styles.input}
