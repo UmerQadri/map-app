@@ -1,16 +1,29 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import { ADD_TASK } from "../actions/ActionTypes";
 
+import { BASE_URL } from "../constants";
+
 import { addTaskSucess, addTaskFailure } from "../actions/taskActions";
 
-function getRequest(url, payload) {}
+function getRequest(payload) {}
 
-function postRequest(url, payload) {}
+function postRequest(payload) {
+  return fetch(BASE_URL, {
+    body: payload,
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson.movies;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 function* addTask(action) {
   try {
     const { payload, api, callback } = action;
-    const response = yield call(postRequest, api, payload);
+    const response = yield call(postRequest, payload);
     if (response) {
       yield put(addTaskSucess(response.data));
       if (callback) {
