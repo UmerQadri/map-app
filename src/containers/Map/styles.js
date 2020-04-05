@@ -5,4 +5,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
   },
+  map: {
+    width: "100%",
+    height: "100%",
+  },
 });
