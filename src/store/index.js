@@ -1,5 +1,6 @@
 import createSagaMiddleware from "redux-saga";
 import { compose, createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
 import sagas from "../sagas";
 import { TaskReducer } from "../reducers";
 
@@ -11,7 +12,7 @@ export default function configureStore() {
 
   const store = createStore(
     TaskReducer,
-    composeEhancers(applyMiddleware(sagaMiddleware))
+    applyMiddleware(sagaMiddleware, logger)
   );
 
   sagaMiddleware.run(sagas);

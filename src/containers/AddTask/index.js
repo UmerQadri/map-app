@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
+import { connect } from "react-redux";
+
+import { TaskPresenter } from "../../presenter";
+
+import { addTask } from "../../actions/taskActions";
 
 import { TextField, AppButton } from "../../components";
 
@@ -17,7 +22,21 @@ class AddTask extends Component {
   };
 
   _onPressTask = () => {
-    alert("pressed");
+    const { task } = this.state;
+    if (task !== "") {
+      this._addTask();
+    }
+  };
+
+  _addTask = () => {
+    const { task } = this.state;
+    const { addTask } = this.props;
+
+    TaskPresenter.sendAddTaskRequest(addTask, task, this._onSuccesTaskAdd);
+  };
+
+  _onSuccesTaskAdd = () => {
+    this.setState({ task: "" });
   };
 
   renderHeading() {
@@ -62,4 +81,12 @@ class AddTask extends Component {
   }
 }
 
-export default AddTask;
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.isLoading,
+  };
+};
+
+const actions = { addTask };
+
+export default connect(mapStateToProps, actions)(AddTask);

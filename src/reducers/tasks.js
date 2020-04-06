@@ -60,5 +60,8 @@ export default function (state = initialState, action) {
         isFailure: true,
         error: action.error,
       };
+
+    default:
+      return state;
   }
 }

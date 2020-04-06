@@ -7,10 +7,11 @@ import {
   GET_TASKS_FAILURE,
 } from "./ActionTypes";
 
-export const addTask = (payload) => {
+export const addTask = (payload, callback) => {
   return {
     type: ADD_TASK,
     payload,
+    callback,
   };
 };
 
