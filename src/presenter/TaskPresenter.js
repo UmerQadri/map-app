@@ -10,6 +10,10 @@ class TaskPresenter {
 
     request(payload, callback);
   }
+
+  sendGetTasksRequest(request) {
+    request();
+  }
 }
 
 export default new TaskPresenter();
