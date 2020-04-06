@@ -10,6 +10,7 @@ import {
 const initialState = {
   tasks: [],
   isLoading: false,
+  isLoadingList: false,
   isFailure: false,
   error: "",
 };
@@ -41,7 +42,7 @@ export default function (state = initialState, action) {
     case GET_TASKS:
       return {
         ...state,
-        isLoading: true,
+        isLoadingList: true,
         isFailure: false,
         error: "",
       };
@@ -49,14 +50,14 @@ export default function (state = initialState, action) {
     case GET_TASKS_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoadingList: false,
         tasks: action.data,
       };
 
     case GET_TASKS_FAILURE:
       return {
         ...state,
-        isLoading: false,
+        isLoadingList: false,
         isFailure: true,
         error: action.error,
       };

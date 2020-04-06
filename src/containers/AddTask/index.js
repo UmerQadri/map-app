@@ -6,7 +6,7 @@ import { TaskPresenter } from "../../presenter";
 
 import { addTask } from "../../actions/taskActions";
 
-import { TextField, AppButton } from "../../components";
+import { TextField, AppButton, AppLoader } from "../../components";
 
 import { Colors } from "../../theme";
 
@@ -23,7 +23,8 @@ class AddTask extends Component {
 
   _onPressTask = () => {
     const { task } = this.state;
-    if (task !== "") {
+    const { isLoading } = this.props;
+    if (task !== "" && !isLoading) {
       this._addTask();
     }
   };
@@ -76,8 +77,19 @@ class AddTask extends Component {
     );
   }
 
+  renderAppLoading() {
+    const { isLoading } = this.props;
+
+    return <AppLoader isFetching={isLoading} />;
+  }
+
   render() {
-    return <View style={styles.container}>{this.renderSection()}</View>;
+    return (
+      <View style={styles.container}>
+        {this.renderSection()}
+        {this.renderAppLoading()}
+      </View>
+    );
   }
 }
 
