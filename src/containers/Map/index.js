@@ -11,14 +11,34 @@ import { MAP_INITIAL_REGION } from "../../constants";
 import { styles } from "./styles";
 
 class Map extends Component {
+  state = {
+    coords: [],
+  };
+
   componentDidMount() {
     setInterval(this._getTasks, 5000);
   }
 
   _getTasks = () => {
     const { getTasks } = this.props;
-    TaskPresenter.sendGetTasksRequest(getTasks);
+    TaskPresenter.sendGetTasksRequest(getTasks, this._onSuccessGetTasks);
   };
+
+  _onSuccessGetTasks = () => {
+    const { tasks } = this.props;
+
+    const coords = TaskPresenter.getLatLngArr(tasks);
+
+    this.setState({ coords }, this._zoomToMarkers);
+  };
+
+  _zoomToMarkers() {
+    const { coords } = this.state;
+
+    this.mapRef.fitToCoordinates(coords, {
+      edgePadding: { top: 25, right: 25, bottom: 25, left: 15 },
+    });
+  }
 
   renderMarkers() {
     const { tasks } = this.props;
@@ -40,7 +60,11 @@ class Map extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapView style={styles.map} initialRegion={MAP_INITIAL_REGION}>
+        <MapView
+          style={styles.map}
+          initialRegion={MAP_INITIAL_REGION}
+          ref={(map) => (this.mapRef = map)}
+        >
           {this.renderMarkers()}
         </MapView>
       </View>

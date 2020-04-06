@@ -28,9 +28,10 @@ export const addTaskFailure = (error) => {
   };
 };
 
-export const getTasks = () => {
+export const getTasks = (callback) => {
   return {
     type: GET_TASKS,
+    callback,
   };
 };
 

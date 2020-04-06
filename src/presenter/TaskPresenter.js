@@ -11,8 +11,21 @@ class TaskPresenter {
     request(payload, callback);
   }
 
-  sendGetTasksRequest(request) {
-    request();
+  sendGetTasksRequest(request, callback) {
+    request(callback);
+  }
+
+  getLatLngArr(tasks) {
+    return tasks
+      .filter((task) => task && task.address && task.address.location !== null)
+      .map((item) => {
+        const coords = item.address.location.coordinates;
+
+        return {
+          latitude: coords[1],
+          longitude: coords[0],
+        };
+      });
   }
 }
 
